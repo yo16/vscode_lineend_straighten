@@ -27,7 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 function formatLineEnd(text: string): string {
-	console.log('formatLineEnd');
+	//console.log('formatLineEnd');
 	let formatted = '';
 
     const lines = text.split(/\n/);
@@ -42,7 +42,7 @@ function formatLineEnd(text: string): string {
 
 	// 4の倍数にそろえる
 	lastPos = Math.floor(lastPos / 4) * 4 + 4;
-	console.log(lastPos);
+	//console.log(lastPos);
 
 	// 行末をそろえる
 	// すべての行は、lastPosより短いはず
