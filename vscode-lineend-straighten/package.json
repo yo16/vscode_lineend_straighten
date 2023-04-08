@@ -17,7 +17,11 @@
         "command": "vscode-lineend-straighten.straightenLineEnd",
         "title": "Straighten line-end"
       }
-    ]
+    ],
+    "keybindings": {
+      "command": "vscode-lineend-straighten.straightenLineEnd",
+      "key": "ctrl+k"
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
