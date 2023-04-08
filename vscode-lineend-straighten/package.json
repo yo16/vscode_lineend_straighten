@@ -23,6 +23,11 @@
       "key": "ctrl+k"
     }
   },
+  "publisher": "xxyo1xx",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yo16/vscode_lineend_straighten"
+  },
   "scripts": {
     "vscode:prepublish": "npm run package",
     "compile": "webpack",
