@@ -12,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
 				const formatted = formatLineEnd(text);
 				if (formatted) {
 					editor.edit(editBuilder => {
-						editBuilder.replace(sel, formatted)
+						editBuilder.replace(sel, formatted);
 					});
 				} else {
 					console.log("Text not formatted");
