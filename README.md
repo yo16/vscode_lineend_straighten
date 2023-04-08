@@ -1,0 +1,2 @@
+# vscode_lineend_straighten
+VSCodeで、選択範囲の行末をそろえる
