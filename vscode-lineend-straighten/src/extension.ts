@@ -1,26 +1,64 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "vscode-lineend-straighten" is now active!');
-
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
 	let disposable = vscode.commands.registerCommand('vscode-lineend-straighten.straightenLineEnd', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from vscode-lineend-straighten!');
+		const editor = vscode.window.activeTextEditor;
+		if (editor) {
+			const doc = editor.document;
+			const sel = editor.selection;
+			const text = doc.getText(sel);
+			if (text) {
+				const formatted = formatLineEnd(text);
+				if (formatted) {
+					editor.edit(editBuilder => {
+						editBuilder.replace(sel, formatted)
+					});
+				} else {
+					console.log("Text not formatted");
+				}
+			} else {
+				console.log("No text is detected.");
+			}
+		}
 	});
 
 	context.subscriptions.push(disposable);
 }
 
-// This method is called when your extension is deactivated
+function formatLineEnd(text: string): string {
+	console.log('formatLineEnd');
+	let formatted = '';
+
+    const lines = text.split(/\n/);
+
+	// 全体の中の最終位置を取得
+	let lastPos = 0;
+	lines.forEach(line => {
+		if (lastPos < line.length) {
+			lastPos = line.length;
+		}
+	});
+
+	// 4の倍数にそろえる
+	lastPos = Math.floor(lastPos / 4) * 4 + 4;
+	console.log(lastPos);
+
+	// 行末をそろえる
+	// すべての行は、lastPosより短いはず
+	let eol = "\n";
+	lines.forEach(line => {
+		// 行末に\rがあったら、lineから\rを取り、改行コードを変更しておく
+		if (line.slice(-1) === "\r") {
+			eol = "\r\n";
+			line = line.slice(0, line.length-1);
+		}
+
+		let tempLine = line + " ".repeat(lastPos - line.length) + eol;
+		formatted += tempLine;
+	});
+
+	return formatted;
+}
+
 export function deactivate() {}
